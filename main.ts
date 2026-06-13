@@ -1,6 +1,12 @@
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.moveWithController(5)
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sprite, location) {
+    scene.cameraShake(4, 500)
+    tiles.setCurrentTilemap(tilemap`level3`)
+    tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
+    Render.setViewAngleInDegree(360)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.toggleViewMode()
 })
@@ -29,7 +35,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (spr
         . . . . . . f f f f d d d c . . 
         . . . . . . . . . . c c c . . . 
         `, SpriteKind.Enemy)
-    tiles.placeOnTile(mySprite2, tiles.getTileLocation(5, 6))
+    tiles.placeOnTile(mySprite2, tiles.getTileLocation(15, 6))
     myMinimap = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . c c c c . . . . 
@@ -48,15 +54,9 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (spr
         . . . . . . f f f f d d d c . . 
         . . . . . . . . . . c c c . . . 
         `, SpriteKind.Enemy)
-    tiles.placeOnTile(myMinimap, tiles.getTileLocation(17, 9))
+    tiles.placeOnTile(myMinimap, tiles.getTileLocation(20, 15))
     mySprite2.follow(mySprite, 30)
     myMinimap.follow(mySprite, 30)
-})
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLight2, function (sprite, location) {
-    scene.cameraShake(4, 500)
-    tiles.setCurrentTilemap(tilemap`level3`)
-    tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
-    Render.setViewAngleInDegree(360)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.jewels.jewel3, function (sprite, location) {
     scene.cameraShake(4, 500)
