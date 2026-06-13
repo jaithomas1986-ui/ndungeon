@@ -1,8 +1,11 @@
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.ax = -50
+    Render.moveWithController(5)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.toggleViewMode()
+})
+controller.B.onEvent(ControllerButtonEvent.Released, function () {
+    Render.moveWithController(3)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLight3, function (sprite, location) {
     scene.cameraShake(4, 500)
@@ -61,6 +64,8 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLight2, function (sp
     Render.setViewAngleInDegree(360)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    scene.cameraShake(4, 500)
+    music.play(music.createSoundEffect(WaveShape.Noise, 5000, 1, 255, 83, 1000, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), music.PlaybackMode.LoopingInBackground)
     game.gameOver(false)
 })
 let myMinimap: Sprite = null
@@ -191,5 +196,6 @@ scene.setBackgroundImage(img`
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     `)
 tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
+Render.moveWithController(3)
 scene.cameraFollowSprite(mySprite)
 Render.setViewAngleInDegree(273)
