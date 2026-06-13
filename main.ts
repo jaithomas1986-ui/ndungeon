@@ -1,6 +1,6 @@
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    Render.moveWithController(5)
-})
+namespace StatusBarKind {
+    export const sprint = StatusBarKind.create()
+}
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sprite, location) {
     scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level3`)
@@ -11,6 +11,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.toggleViewMode()
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
+    Render.moveWithController(3)
+})
+statusbars.onZero(StatusBarKind.sprint, function (status) {
     Render.moveWithController(3)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (sprite, location) {
@@ -59,6 +62,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (spr
     myMinimap.follow(mySprite, 30)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.jewels.jewel3, function (sprite, location) {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level5`)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.doorOpenNorth)
@@ -196,6 +200,28 @@ scene.setBackgroundImage(img`
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     `)
 tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
+let statusbar = statusbars.create(20, 4, StatusBarKind.sprint)
+statusbar.value = 100
+statusbar.positionDirection(CollisionDirection.Bottom)
+statusbar.setBarSize(70, 4)
+statusbar.setColor(2, 10)
 Render.moveWithController(3)
 scene.cameraFollowSprite(mySprite)
 Render.setViewAngleInDegree(273)
+forever(function () {
+    pause(5000)
+    statusbar.value += 5
+})
+forever(function () {
+    if (controller.B.isPressed()) {
+        if (statusbar.value > 0) {
+            Render.moveWithController(5)
+        }
+    }
+})
+forever(function () {
+    if (controller.B.isPressed()) {
+        statusbar.value += -5
+        pause(500)
+    }
+})
