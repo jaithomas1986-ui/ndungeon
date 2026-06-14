@@ -2,13 +2,36 @@ namespace StatusBarKind {
     export const sprint = StatusBarKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sprite, location) {
+    sprites.destroy(mySprite)
+    mySprite3 = sprites.create(img`
+        . . . . . . . . . . b 5 b . . . 
+        . . . . . . . . . b 5 b . . . . 
+        . . . . . . b b b b b b . . . . 
+        . . . . . b b 5 5 5 5 5 b . . . 
+        . . . . b b 5 d 1 f 5 d 4 c . . 
+        . . . . b 5 5 1 f f d d 4 4 4 b 
+        . . . . b 5 5 d f b 4 4 4 4 b . 
+        . . . b d 5 5 5 5 4 4 4 4 b . . 
+        . b b d d d 5 5 5 5 5 5 5 b . . 
+        b d d d b b b 5 5 5 5 5 5 5 b . 
+        c d d b 5 5 d c 5 5 5 5 5 5 b . 
+        c b b d 5 d c d 5 5 5 5 5 5 b . 
+        c b 5 5 b c d d 5 5 5 5 5 5 b . 
+        b b c c c d d d 5 5 5 5 5 d b . 
+        . . . . c c d d d 5 5 5 b b . . 
+        . . . . . . c c c c c b b . . . 
+        `, SpriteKind.Player)
+    tiles.setCurrentTilemap(tilemap`level6`)
+    Render.toggleViewMode()
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    Render.toggleViewMode()
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundSouthEast0, function (sprite, location) {
     scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level3`)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
     Render.setViewAngleInDegree(360)
-})
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    Render.toggleViewMode()
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
     Render.moveWithController(3)
@@ -74,6 +97,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let myMinimap: Sprite = null
 let mySprite2: Sprite = null
+let mySprite3: Sprite = null
 let mySprite: Sprite = null
 mySprite = Render.getRenderSpriteVariable()
 tiles.setCurrentTilemap(tilemap`level2`)
@@ -200,11 +224,10 @@ scene.setBackgroundImage(img`
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     `)
 tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
-let statusbar = statusbars.create(20, 4, StatusBarKind.sprint)
+let statusbar = statusbars.create(100, 4, StatusBarKind.sprint)
 statusbar.value = 100
-statusbar.positionDirection(CollisionDirection.Bottom)
-statusbar.setBarSize(70, 4)
-statusbar.setColor(2, 10)
+statusbar.setBarBorder(1, 15)
+statusbar.positionDirection(CollisionDirection.Top)
 Render.moveWithController(3)
 scene.cameraFollowSprite(mySprite)
 Render.setViewAngleInDegree(273)
