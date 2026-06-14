@@ -27,7 +27,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sp
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.toggleViewMode()
 })
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundSouthEast0, function (sprite, location) {
+scene.onOverlapTile(SpriteKind.Player, assets.tile`baseTransparency16`, function (sprite, location) {
     scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level3`)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
