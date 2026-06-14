@@ -1,25 +1,220 @@
 namespace StatusBarKind {
     export const sprint = StatusBarKind.create()
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    Render.moveWithController(5)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sprite, location) {
-    scene.cameraShake(4, 500)
-    tiles.setCurrentTilemap(tilemap`level3`)
+    tiles.setCurrentTilemap(tilemap`level7`)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
-    Render.setViewAngleInDegree(360)
+    mySprite3 = sprites.create(img`
+        . . . . c c c c c c . . . . . . 
+        . . . c 6 7 7 7 7 6 c . . . . . 
+        . . c 7 7 7 7 7 7 7 7 c . . . . 
+        . c 6 7 7 7 7 7 7 7 7 6 c . . . 
+        . c 7 c 6 6 6 6 c 7 7 7 c . . . 
+        . f 7 6 f 6 6 f 6 7 7 7 f . . . 
+        . f 7 7 7 7 7 7 7 7 7 7 f . . . 
+        . . f 7 7 7 7 6 c 7 7 6 f c . . 
+        . . . f c c c c 7 7 6 f 7 7 c . 
+        . . c 7 2 7 7 7 6 c f 7 7 7 7 c 
+        . c 7 7 2 7 7 c f c 6 7 7 6 c c 
+        c 1 1 1 1 7 6 f c c 6 6 6 c . . 
+        f 1 1 1 1 1 6 6 c 6 6 6 6 f . . 
+        f 6 1 1 1 1 1 6 6 6 6 6 c f . . 
+        . f 6 1 1 1 1 1 1 6 6 6 f . . . 
+        . . c c c c c c c c c f . . . . 
+        `, SpriteKind.Enemy)
+    characterAnimations.loopFrames(
+    mySprite,
+    [img`
+        . . . . . . c c c c c c . . . . 
+        . . . . . c 6 7 7 7 7 6 c . . . 
+        . . . . c 7 7 7 7 7 7 7 7 c . . 
+        . . . c 6 7 7 7 7 7 7 7 7 6 c . 
+        . . . c 7 7 7 c 6 6 6 6 c 7 c . 
+        . . . f 7 7 7 6 f 6 6 f 6 7 f . 
+        . . . f 7 7 7 7 7 7 7 7 7 7 f . 
+        . . c f 6 7 7 c 6 7 7 7 7 f . . 
+        . c 7 7 f 6 7 7 c c c c f . . . 
+        c 7 7 7 7 f c 6 7 7 7 2 7 c . . 
+        c c 6 7 7 6 c f c 7 7 2 7 7 c . 
+        . . c 6 6 6 c c f 6 7 1 1 1 1 c 
+        . . f 6 6 6 6 c 6 6 1 1 1 1 1 f 
+        . . f c 6 6 6 6 6 1 1 1 1 1 6 f 
+        . . . f 6 6 6 1 1 1 1 1 1 6 f . 
+        . . . . f c c c c c c c c c . . 
+        `,img`
+        . . . . . . . c c c c c c . . . 
+        . . . . . . c 6 7 7 7 7 6 c . . 
+        . . . . . c 7 7 7 7 7 7 7 7 c . 
+        . . . . c 6 7 7 7 7 7 7 7 7 6 c 
+        . . . . c 7 7 7 c 6 6 6 6 c 7 c 
+        . . . . f 7 7 7 6 f 6 6 f 6 7 f 
+        . . . . f 7 7 7 7 7 7 7 7 7 7 f 
+        . . . . f 6 7 7 c 6 7 7 7 7 f . 
+        . . c c c f 6 7 7 c c c c f . . 
+        . c 7 7 7 c c f 7 7 7 2 6 c . . 
+        c 7 7 7 7 6 f c 7 7 2 7 7 6 c . 
+        c c c 6 6 6 c 6 6 7 1 1 1 1 c . 
+        . . c 6 6 6 6 6 6 1 1 1 1 1 c . 
+        . . c 6 6 6 6 6 1 1 1 1 1 6 c . 
+        . . c c 6 6 7 1 1 1 1 1 6 c . . 
+        . . . c c c c c c c c c c . . . 
+        `],
+    300,
+    characterAnimations.rule(Predicate.NotMoving)
+    )
+    characterAnimations.loopFrames(
+    mySprite,
+    [img`
+        . . . . c c c c c c c . . . . . 
+        . . . c 6 7 7 7 7 7 6 c . . . . 
+        . . c 6 7 c 6 6 6 6 c 7 c . . . 
+        . . c 7 7 6 f 6 6 f 6 7 6 c . . 
+        . . c 7 7 7 7 7 7 7 7 7 7 c . . 
+        . . f 7 7 7 6 1 f f 1 8 7 f . . 
+        . . f 7 7 7 f 1 f f 1 f 6 f . . 
+        . . f 6 7 7 f 2 2 2 2 f f . . . 
+        . . c f 6 7 7 2 2 2 2 f c c . . 
+        . c 7 7 c c 7 7 7 7 7 7 7 7 c . 
+        c 7 7 7 6 c f 7 7 7 7 1 1 1 7 c 
+        c c 6 6 6 c c f 6 7 1 1 1 1 1 f 
+        . . c 6 6 6 c 6 6 1 1 1 1 1 1 f 
+        . . c 6 6 6 6 6 6 1 1 1 1 1 6 f 
+        . . . c 6 6 6 6 1 1 1 1 1 6 f . 
+        . . . . c c c c c c c c f f . . 
+        `,img`
+        . . . c c c c c c c . . . . . . 
+        . . c 7 f f 6 6 f f c . . . . . 
+        . c 6 7 6 6 6 6 6 6 7 c . . . . 
+        . c 7 7 7 7 7 7 7 7 7 7 c . . . 
+        . c 7 7 7 6 1 f f 1 8 7 c . . . 
+        . f 7 7 7 f 1 f f 1 f 6 f . . . 
+        . f 7 7 7 f 2 2 2 2 f 6 f . . . 
+        . f 6 7 7 f 2 2 2 2 f 6 c c . . 
+        . . c f 7 7 2 2 2 2 7 7 7 7 c . 
+        . c 7 7 c c 7 7 7 7 7 1 1 1 7 c 
+        c 7 7 7 6 c f 7 7 7 1 1 1 1 1 f 
+        c c 6 6 6 c c f 6 1 1 1 1 1 1 f 
+        . . c 6 6 6 c 6 6 1 1 1 1 1 6 f 
+        . . c 6 6 6 6 6 6 1 1 1 1 1 6 f 
+        . . . c 6 6 6 6 6 1 1 1 1 6 f . 
+        . . . . c c c c c c c c f f . . 
+        `,img`
+        . . . c c c c c c c . . . . . . 
+        . . c 7 f f 6 6 f f c . . . . . 
+        . c 6 7 6 6 6 6 6 6 7 c . . . . 
+        . c 7 7 7 7 7 7 7 7 7 7 c . . . 
+        . c 7 7 7 6 1 f f 1 8 7 c . . . 
+        . f 7 7 7 f 1 f f 1 f 6 f . . . 
+        . f 7 7 7 f 2 2 2 2 f 6 f . . . 
+        . f 6 7 7 f 2 2 2 2 f 6 c c . . 
+        . . c f 7 7 2 2 2 2 7 7 7 7 c . 
+        . c 7 7 c c 7 7 7 7 7 1 1 1 7 c 
+        c 7 7 7 6 c f 7 7 7 1 1 1 1 1 f 
+        c c 6 6 6 c c f 6 1 1 1 1 1 1 f 
+        . . c 6 6 6 c 6 6 1 1 1 1 1 6 f 
+        . . c 6 6 6 6 6 6 1 1 1 1 1 6 f 
+        . . . c 6 6 6 6 6 1 1 1 1 6 f . 
+        . . . . c c c c c c c c f f . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        c c c c c . . . . . . . . . . . 
+        c 6 7 7 7 c c . . . . . . . . . 
+        . c c 7 7 7 c c . . . . . . . . 
+        . . . c 7 7 6 c . . . . . . . . 
+        . . . c 6 6 6 c . . . . . . . . 
+        . . c c 6 6 6 c c c c c c . . . 
+        . c 6 6 6 c c 6 7 7 7 7 6 c . . 
+        c c 6 6 6 c 7 7 7 7 7 7 7 7 c . 
+        c 6 6 6 c 6 7 7 7 7 7 7 7 7 6 c 
+        c 6 6 6 c 7 7 7 c 6 6 6 6 c 7 c 
+        c 6 6 6 f 7 7 7 c c 6 6 c c 7 f 
+        c 6 6 6 f 7 7 7 6 f 6 6 f 6 7 f 
+        . c c 6 6 f 6 7 c 1 f f c 1 c . 
+        . . . c c c c c c c c c c c c . 
+        `,img`
+        c c c c c . . . . . . . . . . . 
+        c 6 7 7 7 c c . . . . . . . . . 
+        . c c 7 7 7 c c . . . . . . . . 
+        . . . c 7 7 6 c . . . . . . . . 
+        . . . c 6 6 6 c . . . . . . . . 
+        . . c c 6 6 6 c . . . . . . . . 
+        . c c 6 6 6 c c c c c c c . . . 
+        . c 6 6 6 c c 6 7 7 7 7 6 c . . 
+        c c 6 6 6 c 7 7 7 7 7 7 7 7 c . 
+        c 6 6 6 c 6 7 7 7 7 7 7 7 7 6 c 
+        c 6 6 6 c 7 7 7 c 6 6 6 6 c 7 c 
+        c 6 6 6 f 7 7 7 c c 6 6 c c 7 f 
+        c 6 6 6 f 7 7 7 6 f 6 6 f 6 7 f 
+        . c 6 6 f 6 7 7 7 7 7 7 7 7 f . 
+        . c c 6 6 f 6 7 c 1 f f c 1 c . 
+        . . . c c c c c c c c c c c c . 
+        `,img`
+        c c c c c . . . . . . . . . . . 
+        c 6 7 7 7 c c . . . . . . . . . 
+        . c c 7 7 7 c c . . . . . . . . 
+        . . . c 7 7 6 c . . . . . . . . 
+        . . . c 6 6 6 c . . . . . . . . 
+        . . c c 6 6 6 c . . . . . . . . 
+        . c c 6 6 6 c c c c c c c . . . 
+        . c 6 6 6 c c 6 7 7 7 7 6 c . . 
+        c c 6 6 6 c 7 7 7 7 7 7 7 7 c . 
+        c 6 6 6 c 6 7 7 7 7 7 7 7 7 6 c 
+        c 6 6 6 c 7 7 7 c 6 6 6 6 c 7 c 
+        c 6 6 6 f 7 7 7 c c 6 6 c c 7 f 
+        c 6 6 6 f 7 7 7 6 f 6 6 f 6 7 f 
+        . c 6 6 f 6 7 7 7 7 7 7 7 7 f . 
+        . c c 6 6 f 6 7 c 1 f f c 1 c . 
+        . . . c c c c c c c c c c c c . 
+        `],
+    300,
+    characterAnimations.rule(Predicate.Moving)
+    )
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.toggleViewMode()
 })
-controller.B.onEvent(ControllerButtonEvent.Released, function () {
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
+    mySprite3.follow(mySprite)
+    if (mySprite.overlapsWith(mySprite3) || mySprite.overlapsWith(mySprite3)) {
+    	
+    }
+})
+info.onScore(0, function () {
     Render.moveWithController(3)
 })
-statusbars.onZero(StatusBarKind.sprint, function (status) {
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    pause(2000)
+})
+info.onLifeZero(function () {
+    tiles.setCurrentTilemap(tilemap`level0`)
+    scene.cameraShake(4, 500)
+    tiles.placeOnRandomTile(mySprite, sprites.dungeon.doorOpenNorth)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    music.play(music.createSoundEffect(WaveShape.Noise, 5000, 1, 255, 83, 1000, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), music.PlaybackMode.LoopingInBackground)
+    scene.cameraShake(4, 500)
+    info.setScore(100)
+    info.setLife(10)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthEast0, function (sprite, location) {
+    scene.cameraShake(4, 500)
+    tiles.setCurrentTilemap(tilemap`level3`)
+    tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
+    Render.setViewAngleInDegree(360)
+    game.splash("Find the exit")
+})
+controller.B.onEvent(ControllerButtonEvent.Released, function () {
     Render.moveWithController(3)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (sprite, location) {
     scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level4`)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
+    game.splash("Escape the maze and find the gem")
     mySprite2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . c c c c . . . . 
@@ -66,15 +261,17 @@ scene.onOverlapTile(SpriteKind.Player, sprites.jewels.jewel3, function (sprite, 
     scene.cameraShake(4, 500)
     tiles.setCurrentTilemap(tilemap`level5`)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.doorOpenNorth)
+    game.splash("Congrats you have reached checkpoint 1")
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    scene.cameraShake(4, 500)
-    music.play(music.createSoundEffect(WaveShape.Noise, 5000, 1, 255, 83, 1000, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), music.PlaybackMode.LoopingInBackground)
-    game.gameOver(false)
+    info.changeLifeBy(-1)
+    pause(2000)
 })
 let myMinimap: Sprite = null
 let mySprite2: Sprite = null
+let mySprite3: Sprite = null
 let mySprite: Sprite = null
+game.splash("Dungeon masters", "Press 'x' or 'b' to sprint")
 mySprite = Render.getRenderSpriteVariable()
 tiles.setCurrentTilemap(tilemap`level2`)
 scene.setBackgroundImage(img`
@@ -199,29 +396,29 @@ scene.setBackgroundImage(img`
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     `)
+info.setLife(10)
+info.setScore(100)
 tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
-let statusbar = statusbars.create(20, 4, StatusBarKind.sprint)
-statusbar.value = 100
-statusbar.positionDirection(CollisionDirection.Bottom)
-statusbar.setBarSize(70, 4)
-statusbar.setColor(2, 10)
 Render.moveWithController(3)
 scene.cameraFollowSprite(mySprite)
 Render.setViewAngleInDegree(273)
 forever(function () {
-    pause(5000)
-    statusbar.value += 5
-})
-forever(function () {
     if (controller.B.isPressed()) {
-        if (statusbar.value > 0) {
-            Render.moveWithController(5)
-        }
+        info.changeScoreBy(-5)
+        pause(500)
     }
 })
 forever(function () {
-    if (controller.B.isPressed()) {
-        statusbar.value += -5
-        pause(500)
+    info.changeScoreBy(5)
+    pause(5000)
+})
+forever(function () {
+    if (info.score() > 100) {
+        info.setScore(100)
+    }
+})
+forever(function () {
+    if (info.score() < 0) {
+        info.setScore(0)
     }
 })
