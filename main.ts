@@ -25,6 +25,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sp
         . f 6 1 1 1 1 1 1 6 6 6 f . . . 
         . . c c c c c c c c c f . . . . 
         `, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(mySprite3, sprites.castle.tilePath5)
     characterAnimations.loopFrames(
     mySprite,
     [img`
@@ -178,25 +179,20 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.toggleViewMode()
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
-    mySprite3.follow(mySprite)
-    if (mySprite.overlapsWith(mySprite3) || mySprite.overlapsWith(mySprite3)) {
-    	
-    }
-})
-info.onScore(0, function () {
-    Render.moveWithController(3)
+    mySprite3.follow(mySprite, 40)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
-    pause(2000)
+    pause(1000)
 })
 info.onLifeZero(function () {
     tiles.setCurrentTilemap(tilemap`level0`)
     scene.cameraShake(4, 500)
     tiles.placeOnRandomTile(mySprite, sprites.dungeon.doorOpenNorth)
-    music.play(music.createSoundEffect(WaveShape.Noise, 5000, 1, 255, 83, 1000, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), music.PlaybackMode.LoopingInBackground)
+    music.play(music.createSoundEffect(WaveShape.Noise, 5000, 1, 255, 83, 1000, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), music.PlaybackMode.UntilDone)
     scene.cameraShake(4, 500)
-    info.setScore(100)
+    statusbar.value = 100
+    info.setLife(10)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthEast0, function (sprite, location) {
     scene.cameraShake(4, 500)
@@ -206,6 +202,14 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthEast0, fun
     game.splash("Find the exit")
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
+    Render.moveWithController(3)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.oceanSand15, function (sprite, location) {
+    scene.cameraShake(4, 500)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    tiles.setCurrentTilemap(tilemap`level7`)
+})
+statusbars.onZero(StatusBarKind.sprint, function (status) {
     Render.moveWithController(3)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorDark2, function (sprite, location) {
@@ -268,6 +272,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let myMinimap: Sprite = null
 let mySprite2: Sprite = null
 let mySprite3: Sprite = null
+let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
 game.splash("Dungeon masters", "Press 'x' or 'b' to sprint")
 mySprite = Render.getRenderSpriteVariable()
@@ -395,28 +400,21 @@ scene.setBackgroundImage(img`
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     `)
 info.setLife(10)
-info.setScore(100)
+statusbar = statusbars.create(100, 4, StatusBarKind.sprint)
+statusbar.value = 100
 tiles.placeOnRandomTile(mySprite, sprites.dungeon.collectibleInsignia)
+statusbar.setBarBorder(1, 15)
+statusbar.positionDirection(CollisionDirection.Top)
 Render.moveWithController(3)
 scene.cameraFollowSprite(mySprite)
 Render.setViewAngleInDegree(273)
 forever(function () {
     if (controller.B.isPressed()) {
-        info.changeScoreBy(-5)
+        statusbar.value += -5
         pause(500)
     }
 })
 forever(function () {
-    info.changeScoreBy(5)
+    statusbar.value += 5
     pause(5000)
-})
-forever(function () {
-    if (info.score() > 100) {
-        info.setScore(100)
-    }
-})
-forever(function () {
-    if (info.score() < 0) {
-        info.setScore(0)
-    }
 })
